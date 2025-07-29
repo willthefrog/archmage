@@ -1,0 +1,3 @@
+%wheel ALL=(ALL) ALL
+%wheel ALL= NOPASSWD: /usr/bin/pacman
+Defaults:%wheel !tty_tickets, pwfeedback, timestamp_timeout=30, insults
