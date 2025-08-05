@@ -10,4 +10,6 @@ RUN useradd -u 1000 -m -p '$PASSWD_HASH$' -G adm,wheel $USER$
 COPY wheel /etc/sudoers.d/wheel
 RUN ssh-keygen -A
 EXPOSE 22
+RUN echo "ClientAliveInterval 10" >> /etc/ssh/sshd_config && \
+    echo "ClientAliveCountMax 6" >> /etc/ssh/sshd_config
 CMD ["/usr/bin/sshd", "-D"]
