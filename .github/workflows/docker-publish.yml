@@ -5,6 +5,7 @@ on:
     - cron: "0 0 1 * *"
   push:
     paths:
+      - 'base/**'
       - 'cuda/**'
       - '.github/workflows/docker-publish.yml'
 
@@ -29,10 +30,17 @@ jobs:
 
     - name: Replace placeholders
       run: |
-        sed -i 's|\$USER\$|${{ secrets.USER }}|g' cuda/Dockerfile
-        sed -i 's|\$\$PASSWD_HASH\$\$|${{ secrets.PASSWD_HASH }}|g' cuda/Dockerfile
+        sed -i 's|\$USER\$|${{ secrets.USER }}|g' base/Dockerfile
+        sed -i 's|\$\$PASSWD_HASH\$\$|${{ secrets.PASSWD_HASH }}|g' base/Dockerfile
 
-    - name: Build and push
+    - name: Build and push base image
+      uses: docker/build-push-action@v2
+      with:
+        context: base
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/arch-base:latest
+
+    - name: Build and push cuda image
       uses: docker/build-push-action@v2
       with:
         context: cuda
