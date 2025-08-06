@@ -1,7 +1,7 @@
 FROM archlinux/archlinux:base-devel
 
 RUN pacman -Syu --noconfirm git openssh ripgrep tmux tree vim wget which \
-    python python-uv && pacman -Scc --noconfirm \
+    ipython python-uv && pacman -Scc --noconfirm \
     && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen; locale-gen
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
